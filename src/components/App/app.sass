@@ -1,0 +1,288 @@
+%flex-start
+  display: flex
+  justify-content: center
+  align-items: flex-start
+
+%flex-center
+  display: flex
+  justify-content: center
+  align-items: center
+
+$font-default: 16px
+$font-1280: 14px
+$font-1024: 12px
+$font-768-portrait: 16px
+$font-480-portrait: 14px
+
+$line-positions-top: ('1': 5vw, '2': 15vw, '3': 25vw)
+$line-positions-left: ('4': 5vw, '5': 15vw, '6': 25vw)
+$line-positions-rotate: ('7': rotate(45deg), '8': rotate(-45deg))
+$line-positions-diagotal-top: ('7': -5%, '8': 105%)
+
+html
+  font-size: $font-default
+
+html,
+body
+  margin: 0
+  padding: 0
+
+h1
+  margin-bottom: 5rem
+
+table
+  border-spacing: none
+  border-collapse: collapse
+
+p
+  margin: 0
+  
+#root
+  text-align: center
+  margin: 0 auto
+  position: relative
+
+.container
+  @extend %flex-start
+  position: relative
+  margin: 0 auto
+
+.field
+  position: relative
+  margin-right: 2vw
+  @extend %flex-start
+  & table
+    & td
+      width: 10vw
+      height: 10vw
+      border: 1px solid black
+      cursor: pointer
+      font-size: 5rem
+      transition: 0.5s
+      box-sizing: border-box
+      &:hover
+        background-color: #F0F0F0
+
+.active-cell
+  animation-name: active-cell
+  animation-duration: 1s
+  animation-fill-mode: forwards
+
+@keyframes active-cell
+  from
+    color: #000000
+    background-color: #ffffff
+  to
+    color: #ffffff
+    background-color: #000000
+
+.line
+  position: absolute
+  background-color: red
+  animation-duration: 2s
+  animation-fill-mode: forwards
+  &_horisontal
+    height: 2px
+    width: 110%
+    left: -5%
+    animation-name: animaliton-line-horisontal
+  &_vertical
+    width: 2px
+    top: -5%
+    height: 110%
+    animation-name: animaliton-line-vertical
+  &_diagonal
+    height: 2px
+    width: 155%
+    left: -5%
+    animation-name: animaliton-line-diagonal
+    transform-origin: top left
+  @each $position, $prop in $line-positions-top
+    &_#{$position}
+      top: $prop
+  @each $position, $prop in $line-positions-left
+    &_#{$position}
+      left: $prop
+  @each $position, $prop in $line-positions-rotate
+    &_#{$position}
+      transform: $prop
+  @each $position, $prop in $line-positions-diagotal-top
+    &_#{$position}
+      top: $prop
+
+@keyframes animaliton-line-horisontal
+  from
+    width: 0%
+  to
+    width: 110%
+
+@keyframes animaliton-line-vertical
+  from
+    height: 0%
+  to
+    height: 110%
+
+@keyframes animaliton-line-diagonal
+  from
+    width: 0%
+  to
+    width: 155%
+
+.stats
+  text-align: left
+  margin-left: 2vw
+  &__player
+    font-size: 1.5rem
+
+.log
+  text-align: left
+  & table
+    margin-top: 1rem
+    & tr
+      &:hover :not(th)
+        color: #ffffff
+        background-color: #000000
+    & td, & th
+      width: 10vw
+      height: auto
+      padding-top: 0.25rem
+      padding-bottom: 0.25rem
+      font-size: 1.5rem
+      text-align: center
+      vertical-align: middle
+      height: 1.5rem
+      min-height: 1.5rem
+      transition: 0.5s
+    & td
+      cursor: pointer
+
+.players
+  display: inline
+
+.finish_show
+  top: -4rem
+  position: absolute
+  font-size: 2rem
+  width: 100%
+
+.current-player
+  @extend .finish_show
+  & b
+    position: absolute
+    margin-left: 1rem
+    font-size: 2.2rem
+
+.resetBtn
+  margin: 2vw 0 6vw 0
+  padding: 1vw 3vw
+  font-size: 1.5rem
+  cursor: pointer
+  border: 1px solid black
+  border-radius: 5px
+  background-color: #ffffff
+  transition: 0.4s
+  outline: none
+  &:hover
+    color: #ffffff
+    background-color: #000000
+
+.popup
+  @extend %flex-center
+  position: fixed
+  left: 0
+  top: 0
+  width: 100vw
+  height: 100vh
+  background-color: rgba(0, 0, 0, 0.7)
+  &__title
+    font-size: 2rem
+  &__container
+    padding: 3vw
+    background-color: #ffffff
+    border-radius: 15px
+  &__input
+    display: block
+    width: 100%
+    margin-bottom: 2vw
+    font-size: 1.5rem
+    border: 1px solid black
+    border-radius: 5px
+    padding: 1vw 0
+    outline: none
+    text-align: center
+  &__start-game
+    @extend .resetBtn
+    margin: 1vw auto
+    padding: 1vw
+    display: block
+
+@media (max-width: 1280px)
+  html
+    font-size: $font-1280
+
+@media (max-width: 1024px)
+  html
+    font-size: $font-1024
+
+@media (max-width: 768px)
+  %flex-column
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+
+  html
+    font-size: $font-768-portrait
+
+  .container
+    @extend %flex-column
+
+  .field
+    width: 100%
+    & table
+      & td
+        width: 15vw
+        height: 15vw
+
+  .stats
+    width: 100%
+    text-align: center
+
+  .log
+    width: auto
+    text-align: center
+    & table
+      margin: 2vw auto
+      & td, & th
+        width: 20vw
+
+  .finish_show
+    top: -4rem
+    position: absolute
+    display: block
+    font-size: 2rem
+    left: 50%
+    transform: translateX(-50%)
+
+  .current-player
+    transform: translateX(-55%)
+
+  .resetBtn
+    padding: 2vw
+
+@media (max-width: 480px)
+  html
+    font-size: $font-480-portrait
+
+  .field
+    width: 100%
+    & table
+      & td
+        width: 20vw
+        height: 20vw
+        font-size: 4rem
+
+  .log
+    & table
+      & td, & th
+        padding-top: 0.1rem

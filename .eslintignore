@@ -1,0 +1,6 @@
+node_modules
+__tests__
+dist
+public
+assets
+serviceWorker.js
